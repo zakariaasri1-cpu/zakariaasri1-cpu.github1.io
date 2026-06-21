@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakaria Asri — Developer</title>
+<style>
+  :root{
+    --bg: #0d1117;
+    --bg-panel: #11161d;
+    --bg-panel-2: #161c25;
+    --line: #232b36;
+    --text: #d9e0ea;
+    --text-dim: #7a8699;
+    --accent: #5eead4;
+    --accent-2: #f2c14e;
+    --mono: 'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans: 'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  ::selection{ background:var(--accent); color:#0d1117; }
+
+  a{color:inherit;}
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(13,17,23,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:920px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--mono); font-size:13px;
+  }
+  .topbar .dots{ display:flex; gap:6px; }
+  .topbar .dots span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .dots .r{background:#ff5f56;} .dots .y{background:#ffbd2e;} .dots .g{background:#27c93f;}
+  .topbar nav{ display:flex; gap:18px; }
+  .topbar nav a{ color:var(--text-dim); text-decoration:none; transition:color .2s; }
+  .topbar nav a:hover, .topbar nav a:focus-visible{ color:var(--accent); outline:none; }
+
+  /* ---------- Hero / terminal ---------- */
+  .hero{ padding:64px 0 40px; }
+  .terminal{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-head{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px;
+    background:var(--bg-panel-2);
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+  }
+  .terminal-head .dots span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .terminal-body{
+    padding:28px 24px 32px;
+    font-family:var(--mono);
+    font-size:15px;
+  }
+  .prompt{ color:var(--accent); }
+  .path{ color:var(--accent-2); }
+  .terminal-body .line{ color:var(--text-dim); margin:0 0 6px; }
+  .typed{
+    display:inline-block;
+    border-right: 2px solid var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    animation: type 2.6s steps(40,end) forwards, blink .8s step-end infinite;
+    vertical-align: bottom;
+  }
+  @keyframes type{ to{ width: 30ch; } }
+  @keyframes blink{ 50%{ border-color: transparent; } }
+  @media (prefers-reduced-motion: reduce){
+    .typed{ width:auto; border-right:none; animation:none; }
+  }
+  .hero h1{
+    font-family:var(--sans);
+    font-size:clamp(28px,5vw,42px);
+    margin:18px 0 6px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .hero .role{
+    color:var(--accent);
+    font-family:var(--mono);
+    font-size:15px;
+  }
+  .hero p.lead{
+    color:var(--text-dim);
+    max-width:60ch;
+    margin-top:14px;
+    font-size:16px;
+  }
+  .hero .cta{
+    margin-top:24px;
+    display:flex; gap:12px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono); font-size:13px;
+    padding:10px 16px;
+    border-radius:6px;
+    border:1px solid var(--line);
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+    transition: border-color .2s, transform .15s, background .2s;
+  }
+  .btn:hover, .btn:focus-visible{ border-color:var(--accent); transform:translateY(-1px); outline:none; }
+  .btn.primary{ background:var(--accent); color:#0d1117; border-color:var(--accent); font-weight:600; }
+  .btn.primary:hover{ background:#7ff2df; }
+
+  /* ---------- Sections ---------- */
+  section{ padding:56px 0; border-top:1px solid var(--line); }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    letter-spacing:0.08em; text-transform:uppercase; margin:0 0 8px;
+  }
+  .eyebrow::before{ content:"// "; color:var(--text-dim); }
+  h2{ font-size:24px; margin:0 0 20px; }
+
+  /* About */
+  #about p{ color:var(--text-dim); max-width:64ch; font-size:16px; }
+  #about strong{ color:var(--text); }
+
+  /* Skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap:14px;
+  }
+  .skill-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px;
+  }
+  .skill-card h3{
+    font-family:var(--mono); font-size:13px; color:var(--accent-2);
+    margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em;
+  }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-tags span{
+    font-family:var(--mono); font-size:12.5px;
+    background:var(--bg-panel-2);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:5px;
+    color:var(--text);
+  }
+  .lang-list{ display:flex; flex-direction:column; gap:10px; }
+  .lang-row{ display:flex; align-items:center; gap:12px; font-size:14px; }
+  .lang-row .name{ width:80px; flex-shrink:0; font-family:var(--mono); font-size:13px; }
+  .lang-bar{ flex:1; height:6px; background:var(--bg-panel-2); border-radius:3px; overflow:hidden; }
+  .lang-bar i{ display:block; height:100%; background:var(--accent); border-radius:3px; }
+
+  /* Projects */
+  .projects-empty{
+    background:var(--bg-panel);
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:32px 24px;
+    text-align:center;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:14px;
+  }
+  .projects-empty .cursor-line{ color:var(--accent); margin-bottom:6px; }
+  .projects-empty .blinker{
+    display:inline-block; width:8px; height:14px; background:var(--accent);
+    animation: blink 1s step-end infinite; vertical-align:middle; margin-left:2px;
+  }
+
+  /* Contact */
+  .contact-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:14px;
+  }
+  .contact-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px;
+    text-decoration:none;
+    display:flex; flex-direction:column; gap:6px;
+    transition: border-color .2s, transform .15s;
+  }
+  .contact-card:hover, .contact-card:focus-visible{ border-color:var(--accent); transform:translateY(-2px); outline:none; }
+  .contact-card .label{ font-family:var(--mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .contact-card .value{ font-size:15px; word-break:break-word; }
+
+  footer{
+    padding:28px 0 40px;
+    text-align:center;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="dots">
+      <span class="r"></span><span class="y"></span><span class="g"></span>
+    </div>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="terminal">
+      <div class="terminal-head">
+        <div class="dots"><span class="r" style="background:#ff5f56"></span><span class="y" style="background:#ffbd2e"></span><span class="g" style="background:#27c93f"></span></div>
+        <span>zakaria@morocco: ~</span>
+      </div>
+      <div class="terminal-body">
+        <p class="line"><span class="prompt">$</span> whoami</p>
+        <p class="typed">zakaria_asri — building things</p>
+      </div>
+    </div>
+
+    <h1>Zakaria Asri</h1>
+    <div class="role">high school student · aspiring developer · Morocco</div>
+    <p class="lead">
+      I'm a high school student in Morocco studying Physical Sciences, with a growing passion
+      for programming, web development, and entrepreneurship. I'm currently sharpening my skills
+      in software development, web design, and English — one project at a time.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="#contact">Get in touch</a>
+      <a class="btn" href="https://github.com/zakariaasri1-cpu" target="_blank" rel="noopener">View GitHub</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="eyebrow">about</p>
+    <h2>About me</h2>
+    <p>
+      Hi, I'm <strong>Zakaria</strong>, a high school student in Morocco passionate about
+      programming, technology, and entrepreneurship. I'm currently studying
+      <strong>Physical Sciences</strong> and continuously improving my skills in
+      software development, web design, and English. I'm early in my journey —
+      learning in public, building real things, and figuring out what I want to create next.
+    </p>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow">skills</p>
+    <h2>What I work with</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Programming</h3>
+        <div class="skill-tags">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Web Development</h3>
+        <div class="skill-tags">
+          <span>Responsive Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Tools</h3>
+        <div class="skill-tags">
+          <span>Git</span><span>GitHub</span><span>VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Design</h3>
+        <div class="skill-tags">
+          <span>Canva</span><span>Figma</span>
+        </div>
+      </div>
+      <div class="skill-card" style="grid-column: 1 / -1;">
+        <h3>Languages</h3>
+        <div class="lang-list">
+          <div class="lang-row"><span class="name">Arabic</span><div class="lang-bar"><i style="width:100%"></i></div><span>Native</span></div>
+          <div class="lang-row"><span class="name">English</span><div class="lang-bar"><i style="width:60%"></i></div><span>Intermediate</span></div>
+          <div class="lang-row"><span class="name">French</span><div class="lang-bar"><i style="width:30%"></i></div><span>Basic</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="eyebrow">projects</p>
+    <h2>Projects</h2>
+    <div class="projects-empty">
+      <p class="cursor-line">$ ls projects/</p>
+      <p>nothing here yet<span class="blinker"></span></p>
+      <p style="margin-top:10px; color:var(--text-dim);">First commit coming soon. Check back later.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow">contact</p>
+    <h2>Get in touch</h2>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:zakariaasri039@gmail.com">
+        <span class="label">Email</span>
+        <span class="value">zakariaasri039@gmail.com</span>
+      </a>
+      <a class="contact-card" href="https://github.com/zakariaasri1-cpu" target="_blank" rel="noopener">
+        <span class="label">GitHub</span>
+        <span class="value">zakariaasri1-cpu</span>
+      </a>
+      <a class="contact-card" href="https://www.instagram.com/zaka.riadev1" target="_blank" rel="noopener">
+        <span class="label">Instagram</span>
+        <span class="value">@zaka.riadev1</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    built by Zakaria · Morocco · 2026
+  </footer>
+
+</div>
+
+</body>
+</html>
